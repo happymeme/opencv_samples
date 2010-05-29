@@ -1,4 +1,4 @@
-// http://opencv.jp
+// http://opencv.jp より
 // カメラキャプチャのテンプレ
 
 #include <cv.h>
