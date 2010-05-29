@@ -19,4 +19,4 @@ else
 fi
 
 # compile
-g++ -o $OBJ $1 -I/opt/local/include/opencv  -L/opt/local/lib -lcv -lhighgui -lcvaux -lml -lcxcore  
+g++ -o $OBJ $1 -I/usr/local/include/opencv  -L/usr/local/lib -lcv -lhighgui -lcvaux -lml -lcxcore  

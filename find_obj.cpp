@@ -5,8 +5,7 @@
  * liuliu.1987+opencv@gmail.com
  */
 
-// sample$B%U%)%k%@$N(Bfind_obj.cpp$B$r$$$8$C$F(B
-// $BF02h$KBP1~(B
+// sampleを改造して動画に対応
 
 #include <cv.h>
 #include <highgui.h>
@@ -169,12 +168,12 @@ int main(int argc, char** argv)
 	IplImage* captureImage = NULL;
     IplImage* image = NULL;
 
-	//$B%+%a%i%-%c%W%A%c(B
+	//カメラキャプチャ
 	CvCapture* capture = NULL;
 	if (argc == 1 || (argc == 2 && strlen (argv[1]) == 1 && isdigit (argv[1][0])))
 		capture = cvCreateCameraCapture (argc == 2 ? argv[1][0] - '0' : 0);
 
-	//$B2hA|%5%$%:$r<hF@(B
+	//画像サイズを取得
 	captureImage = cvQueryFrame(capture);
 	image = cvCreateImage(cvGetSize(captureImage), 8, 1);
 
