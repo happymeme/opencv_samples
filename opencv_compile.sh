@@ -12,7 +12,7 @@ fi
 
 # obj filename
 if [ -n $2 ]; then
-	# $B3HD%;R$r<h$j=|$/(B
+	# 拡張子を取り除く
 	OBJ=`echo $1 | sed -e "s/\.[^.]*$//"`
 else
 	OBJ=$2
