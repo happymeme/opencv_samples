@@ -1,6 +1,10 @@
+// http://opencv.jp
+// カメラキャプチャのテンプレ
+
 #include <cv.h>
 #include <highgui.h>
 #include <ctype.h>
+
 
 int
 main (int argc, char **argv)
