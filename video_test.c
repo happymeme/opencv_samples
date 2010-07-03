@@ -1,13 +1,25 @@
 // 動画ファイルの読み込み
 // p で再生、停止
 // s で現在のフレームを画像として保存
+// トラックバーつき
+// 再生時にトラックバー名横の数字が更新されないのは謎
 
 #include <cv.h>
 #include <highgui.h>
 #include <ctype.h>
 
+int slider_position = 0;
+CvCapture *capture = 0;
+IplImage *frame = 0;
+
 void usage(){
   printf("Usage: ./video_test video_file_name\n");
+}
+
+void onTrackBarSlide(int pos){
+  cvSetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES, pos);
+  frame = cvQueryFrame (capture);
+  cvShowImage ("Capture", frame);
 }
 
 int
@@ -35,8 +47,6 @@ main (int argc, char **argv)
             "\tother key - next frame\n"
             "\n" );
 
-  CvCapture *capture = 0;
-  IplImage *frame = 0;
   double w = 320, h = 240;
   int c;
 
@@ -52,10 +62,20 @@ main (int argc, char **argv)
 
   cvNamedWindow ("Capture", CV_WINDOW_AUTOSIZE);
 
+  //スライドバーとかつけちゃう
+  int frames = (int)cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_COUNT);
+  if(frames != 0){
+    cvCreateTrackbar("Position", "Capture", &slider_position, frames, onTrackBarSlide);
+  }
+
   int play = 0;
-  // (3)カメラから画像をキャプチャする
+  // ビデオから画像をキャプチャする
   while (1) {
     frame = cvQueryFrame (capture);
+
+    slider_position = (int)cvGetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES);
+    cvSetTrackbarPos("Position", "Capture", slider_position);
+
     cvShowImage ("Capture", frame);
 
     if(play){
@@ -74,7 +94,6 @@ main (int argc, char **argv)
           play ^= 1;
           break;
       case 's':
-          //int num = (int)cvGetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES);
           //printf("%d\n", num);
           // ↓なぜかBus error
           //sprintf(imagename, "image_%d.jpg", num);
