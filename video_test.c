@@ -1,5 +1,6 @@
-// htp://opencv.jp より
 // 動画ファイルの読み込み
+// p で再生、停止
+// s で現在のフレームを画像として保存
 
 #include <cv.h>
 #include <highgui.h>
@@ -12,6 +13,16 @@ void usage(){
 int
 main (int argc, char **argv)
 {
+  //読み込む動画ファイル名
+  char* filename;
+  char* imagename;
+  if (argc == 2){
+    filename = argv[1];
+  }else{
+    usage();
+    return -1;
+  }
+
     printf ("########### #############\n"
       "video_test, using OpenCV version %s (%d.%d.%d)\n",
 	    CV_VERSION,
@@ -23,16 +34,6 @@ main (int argc, char **argv)
             "\ts - save current frame as jpg\n"
             "\tother key - next frame\n"
             "\n" );
-
-  //読み込む動画ファイル名
-  char* filename;
-  char* imagename;
-  if (argc == 2){
-    filename = argv[1];
-  }else{
-    usage();
-    return -1;
-  }
 
   CvCapture *capture = 0;
   IplImage *frame = 0;
